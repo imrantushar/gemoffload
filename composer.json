@@ -1,5 +1,5 @@
 {
-    "name": "kodezen/gemcloud",
+    "name": "kodezen/gemoffload",
     "description": "Offload WordPress media and protected files to Amazon S3 and Cloudflare R2.",
     "license": "GPL-3.0-or-later",
     "require": {

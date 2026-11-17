@@ -1,13 +1,13 @@
 <?php
-namespace GemCloud;
+namespace GemOffload;
 
-use GemCloud\Http\StorageException;
-use GemCloud\Items\Item;
-use GemCloud\Items\ItemRepository;
-use GemCloud\Jobs\Queue;
-use GemCloud\Media\PrivateDelivery;
-use GemCloud\Providers\Endpoint;
-use GemCloud\Providers\S3CompatibleDriver;
+use GemOffload\Http\StorageException;
+use GemOffload\Items\Item;
+use GemOffload\Items\ItemRepository;
+use GemOffload\Jobs\Queue;
+use GemOffload\Media\PrivateDelivery;
+use GemOffload\Providers\Endpoint;
+use GemOffload\Providers\S3CompatibleDriver;
 use WP_Error;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -29,7 +29,7 @@ final class Manager {
 	private static ?S3CompatibleDriver $driver = null;
 
 	public static function version(): string {
-		return GEMCLOUD_VERSION;
+		return GEMOFFLOAD_VERSION;
 	}
 
 	public static function supports( string $feature ): bool {
@@ -67,23 +67,23 @@ final class Manager {
 	 */
 	public static function upload( string $path, Ref $ref, array $opts = [] ) {
 		if ( ! self::available() ) {
-			return new WP_Error( 'gemcloud_unavailable', __( 'Cloud storage is not configured.', 'gemcloud' ) );
+			return new WP_Error( 'gemoffload_unavailable', __( 'Cloud storage is not configured.', 'gemoffload' ) );
 		}
 
 		$context = Contexts::get( $ref->context );
 		if ( ! $context ) {
-			return new WP_Error( 'gemcloud_unknown_context', sprintf( /* translators: %s: context key */ __( 'Unknown storage context "%s".', 'gemcloud' ), $ref->context ) );
+			return new WP_Error( 'gemoffload_unknown_context', sprintf( /* translators: %s: context key */ __( 'Unknown storage context "%s".', 'gemoffload' ), $ref->context ) );
 		}
 		if ( ! $context['enabled'] ) {
-			return new WP_Error( 'gemcloud_context_disabled', __( 'This kind of file is switched off in the storage settings.', 'gemcloud' ) );
+			return new WP_Error( 'gemoffload_context_disabled', __( 'This kind of file is switched off in the storage settings.', 'gemoffload' ) );
 		}
 		if ( ! is_readable( $path ) ) {
-			return new WP_Error( 'gemcloud_missing_file', __( 'The file to upload does not exist.', 'gemcloud' ) );
+			return new WP_Error( 'gemoffload_missing_file', __( 'The file to upload does not exist.', 'gemoffload' ) );
 		}
 
 		$size = (int) filesize( $path );
 		if ( $context['max_size'] > 0 && $size > $context['max_size'] ) {
-			return new WP_Error( 'gemcloud_too_large', __( 'The file is larger than this context allows.', 'gemcloud' ) );
+			return new WP_Error( 'gemoffload_too_large', __( 'The file is larger than this context allows.', 'gemoffload' ) );
 		}
 
 		$variant    = $opts['variant'] ?? 'original';
@@ -169,7 +169,7 @@ final class Manager {
 		 * @param string $url  URL.
 		 * @param Item   $item The object.
 		 */
-		return (string) apply_filters( 'gemcloud/url', $base . '/' . Endpoint::encode_key( $item->object_key ), $item );
+		return (string) apply_filters( 'gemoffload/url', $base . '/' . Endpoint::encode_key( $item->object_key ), $item );
 	}
 
 	/**
@@ -209,7 +209,7 @@ final class Manager {
 	public static function temporary_url( Ref $ref, array $opts = [] ) {
 		$item = ItemRepository::find_variant( $ref->context, $ref->id, $opts['variant'] ?? 'original' );
 		if ( ! $item ) {
-			return new WP_Error( 'gemcloud_not_found', __( 'This file is not in cloud storage.', 'gemcloud' ) );
+			return new WP_Error( 'gemoffload_not_found', __( 'This file is not in cloud storage.', 'gemoffload' ) );
 		}
 		return self::signed_url_for( $item, $opts );
 	}
@@ -219,10 +219,10 @@ final class Manager {
 	 */
 	public static function signed_url_for( Item $item, array $opts = [] ) {
 		if ( ! self::available() ) {
-			return new WP_Error( 'gemcloud_unavailable', __( 'Cloud storage is not configured.', 'gemcloud' ) );
+			return new WP_Error( 'gemoffload_unavailable', __( 'Cloud storage is not configured.', 'gemoffload' ) );
 		}
 		if ( ! $item->is_synced() ) {
-			return new WP_Error( 'gemcloud_not_synced', __( 'This file has not finished uploading.', 'gemcloud' ) );
+			return new WP_Error( 'gemoffload_not_synced', __( 'This file has not finished uploading.', 'gemoffload' ) );
 		}
 
 		$ttl = (int) ( $opts['ttl'] ?? Settings::value( 'signed_url_ttl', 300 ) );
@@ -233,7 +233,7 @@ final class Manager {
 		 * @param int  $ttl  Seconds.
 		 * @param Item $item The object.
 		 */
-		$ttl = (int) apply_filters( 'gemcloud/temporary_url_ttl', $ttl, $item );
+		$ttl = (int) apply_filters( 'gemoffload/temporary_url_ttl', $ttl, $item );
 
 		$filename    = $opts['filename'] ?? $item->filename();
 		$disposition = 'inline' === ( $opts['disposition'] ?? 'attachment' ) ? 'inline' : 'attachment';
@@ -249,7 +249,7 @@ final class Manager {
 		try {
 			return self::driver()->presign_get( $item->bucket, $item->object_key, $ttl, $response );
 		} catch ( \Throwable $e ) {
-			return new WP_Error( 'gemcloud_sign_failed', $e->getMessage() );
+			return new WP_Error( 'gemoffload_sign_failed', $e->getMessage() );
 		}
 	}
 
@@ -326,6 +326,6 @@ final class Manager {
 	 * Translate a provider error into WP_Error for callers.
 	 */
 	public static function to_wp_error( StorageException $e ): WP_Error {
-		return new WP_Error( 'gemcloud_' . $e->error_code(), $e->getMessage(), $e->to_array() );
+		return new WP_Error( 'gemoffload_' . $e->error_code(), $e->getMessage(), $e->to_array() );
 	}
 }

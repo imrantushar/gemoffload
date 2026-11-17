@@ -1,13 +1,13 @@
 {
 	"compilerOptions": {
-		"baseUrl": "dev_gemcloud",
+		"baseUrl": "dev_gemoffload",
 		"paths": {
-			"@GCSComponents/*": [ "components/*" ],
-			"@GCSContainers/*": [ "containers/*" ],
-			"@GCSPages/*": [ "containers/BackendDashboard/pages/*" ],
-			"@GCSRedux/*": [ "redux/*" ],
-			"@GCSUtils/*": [ "utils/*" ]
+			"@GOSComponents/*": [ "components/*" ],
+			"@GOSContainers/*": [ "containers/*" ],
+			"@GOSPages/*": [ "containers/BackendDashboard/pages/*" ],
+			"@GOSRedux/*": [ "redux/*" ],
+			"@GOSUtils/*": [ "utils/*" ]
 		}
 	},
-	"include": [ "dev_gemcloud" ]
+	"include": [ "dev_gemoffload" ]
 }

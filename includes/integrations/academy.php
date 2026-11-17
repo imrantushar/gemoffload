@@ -1,7 +1,7 @@
 <?php
-namespace GemCloud\Integrations;
+namespace GemOffload\Integrations;
 
-use GemCloud\Contexts;
+use GemOffload\Contexts;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -35,7 +35,7 @@ final class Academy extends Integration {
 	}
 
 	public function label(): string {
-		return __( 'Academy LMS', 'gemcloud' );
+		return __( 'Academy LMS', 'gemoffload' );
 	}
 
 	public function detected(): bool {
@@ -52,32 +52,32 @@ final class Academy extends Integration {
 	public function kinds(): array {
 		return [
 			'lesson_videos'      => [
-				'label'       => __( 'Lesson videos', 'gemcloud' ),
-				'description' => __( 'Self-hosted videos played in lessons. Links last at least 4 hours so a long lesson keeps playing.', 'gemcloud' ),
+				'label'       => __( 'Lesson videos', 'gemoffload' ),
+				'description' => __( 'Self-hosted videos played in lessons. Links last at least 4 hours so a long lesson keeps playing.', 'gemoffload' ),
 			],
 			'subtitles'          => [
-				'label'       => __( 'Video subtitles', 'gemcloud' ),
-				'description' => __( 'Caption files (.vtt) of lesson videos, streamed through this site.', 'gemcloud' ),
+				'label'       => __( 'Video subtitles', 'gemoffload' ),
+				'description' => __( 'Caption files (.vtt) of lesson videos, streamed through this site.', 'gemoffload' ),
 			],
 			'lesson_attachments' => [
-				'label'       => __( 'Lesson attachments', 'gemcloud' ),
-				'description' => __( 'Paid materials attached to lessons: PDFs, slides, ZIPs.', 'gemcloud' ),
+				'label'       => __( 'Lesson attachments', 'gemoffload' ),
+				'description' => __( 'Paid materials attached to lessons: PDFs, slides, ZIPs.', 'gemoffload' ),
 			],
 			'assignment_files'   => [
-				'label'       => __( 'Assignment files', 'gemcloud' ),
-				'description' => __( 'Files instructors attach to assignments.', 'gemcloud' ),
+				'label'       => __( 'Assignment files', 'gemoffload' ),
+				'description' => __( 'Files instructors attach to assignments.', 'gemoffload' ),
 			],
 			'submissions'        => [
-				'label'       => __( 'Assignment submissions', 'gemcloud' ),
-				'description' => __( 'Files students submit. Only the student and the course instructors can open them.', 'gemcloud' ),
+				'label'       => __( 'Assignment submissions', 'gemoffload' ),
+				'description' => __( 'Files students submit. Only the student and the course instructors can open them.', 'gemoffload' ),
 			],
 		];
 	}
 
 	public function register_context(): void {
 		Contexts::register( self::KEY, [
-			'label'       => __( 'Academy LMS course files', 'gemcloud' ),
-			'description' => __( 'Lesson videos, subtitles and attachments, assignment files and student submissions. Kept in the private bucket and opened only by students who can access the lesson, the course instructors and admins.', 'gemcloud' ),
+			'label'       => __( 'Academy LMS course files', 'gemoffload' ),
+			'description' => __( 'Lesson videos, subtitles and attachments, assignment files and student submissions. Kept in the private bucket and opened only by students who can access the lesson, the course instructors and admins.', 'gemoffload' ),
 			'visibility'  => 'private',
 			'source'      => 'Academy LMS',
 			'locked'      => [ 'visibility' ],
@@ -153,11 +153,11 @@ final class Academy extends Integration {
 		$reasons = [];
 		$roles   = [
 			/* translators: %s: lesson title. */
-			'video'      => __( 'Video of lesson "%s"', 'gemcloud' ),
+			'video'      => __( 'Video of lesson "%s"', 'gemoffload' ),
 			/* translators: %s: lesson title. */
-			'subtitle'   => __( 'Subtitles of lesson "%s"', 'gemcloud' ),
+			'subtitle'   => __( 'Subtitles of lesson "%s"', 'gemoffload' ),
 			/* translators: %s: lesson title. */
-			'attachment' => __( 'Attachment of lesson "%s"', 'gemcloud' ),
+			'attachment' => __( 'Attachment of lesson "%s"', 'gemoffload' ),
 		];
 
 		foreach ( $this->lessons_using( $attachment_id ) as $lesson_id => $role ) {
@@ -168,13 +168,13 @@ final class Academy extends Integration {
 		$assignments = $this->kind_on( 'assignment_files', $all_kinds ) ? $this->assignments_using( $attachment_id ) : [];
 		foreach ( $assignments as $assignment_id ) {
 			/* translators: %s: assignment title */
-			$reasons[] = sprintf( __( 'File of assignment "%s"', 'gemcloud' ), get_the_title( $assignment_id ) );
+			$reasons[] = sprintf( __( 'File of assignment "%s"', 'gemoffload' ), get_the_title( $assignment_id ) );
 		}
 		$submissions = $this->kind_on( 'submissions', $all_kinds ) ? $this->submissions_using( $attachment_id ) : [];
 		foreach ( $submissions as $comment ) {
 			$user = get_userdata( (int) $comment->user_id );
 			/* translators: 1: assignment title, 2: student name */
-			$reasons[] = sprintf( __( 'Submission to "%1$s" by %2$s', 'gemcloud' ), get_the_title( (int) $comment->comment_post_ID ), $user ? $user->display_name : '#' . (int) $comment->user_id );
+			$reasons[] = sprintf( __( 'Submission to "%1$s" by %2$s', 'gemoffload' ), get_the_title( (int) $comment->comment_post_ID ), $user ? $user->display_name : '#' . (int) $comment->user_id );
 		}
 
 		return $reasons;

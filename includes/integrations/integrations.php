@@ -1,14 +1,14 @@
 <?php
-namespace GemCloud\Integrations;
+namespace GemOffload\Integrations;
 
-use GemCloud\Jobs\Queue;
+use GemOffload\Jobs\Queue;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * The products GemCloud knows how to protect files for.
+ * The products GemOffload knows how to protect files for.
  */
 final class Integrations {
 
@@ -19,8 +19,8 @@ final class Integrations {
 	private static array $uses = [];
 
 	public static function init(): void {
-		// Before plugins hooked onto gemcloud/loaded at the default priority.
-		add_action( 'gemcloud/loaded', [ self::class, 'boot' ], 5 );
+		// Before plugins hooked onto gemoffload/loaded at the default priority.
+		add_action( 'gemoffload/loaded', [ self::class, 'boot' ], 5 );
 	}
 
 	public static function boot(): void {
@@ -29,7 +29,7 @@ final class Integrations {
 		 *
 		 * @param Integration[] $integrations
 		 */
-		$candidates = (array) apply_filters( 'gemcloud/integrations', [ new Academy(), new StoreEngine(), new TruePlayer() ] );
+		$candidates = (array) apply_filters( 'gemoffload/integrations', [ new Academy(), new StoreEngine(), new TruePlayer() ] );
 
 		foreach ( $candidates as $integration ) {
 			if ( $integration instanceof Integration && $integration->detected() ) {

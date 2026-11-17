@@ -1,11 +1,11 @@
 <?php
-namespace GemCloud\Integrations;
+namespace GemOffload\Integrations;
 
-use GemCloud\Contexts;
-use GemCloud\Items\ItemRepository;
-use GemCloud\Manager;
-use GemCloud\Media\UrlRewriter;
-use GemCloud\Ref;
+use GemOffload\Contexts;
+use GemOffload\Items\ItemRepository;
+use GemOffload\Manager;
+use GemOffload\Media\UrlRewriter;
+use GemOffload\Ref;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -42,7 +42,7 @@ final class StoreEngine extends Integration {
 	}
 
 	public function label(): string {
-		return __( 'StoreEngine', 'gemcloud' );
+		return __( 'StoreEngine', 'gemoffload' );
 	}
 
 	public function detected(): bool {
@@ -52,20 +52,20 @@ final class StoreEngine extends Integration {
 	public function kinds(): array {
 		return [
 			'media_downloads' => [
-				'label'       => __( 'Downloads from the media library', 'gemcloud' ),
-				'description' => __( 'Ebooks, software, templates, music and other files picked from the media library. Moved to the private bucket.', 'gemcloud' ),
+				'label'       => __( 'Downloads from the media library', 'gemoffload' ),
+				'description' => __( 'Ebooks, software, templates, music and other files picked from the media library. Moved to the private bucket.', 'gemoffload' ),
 			],
 			'other_downloads' => [
-				'label'       => __( 'Downloads stored elsewhere on this server', 'gemcloud' ),
-				'description' => __( 'Files outside the media library, such as storeengine_uploads. Copied to the private bucket; the server keeps its copy.', 'gemcloud' ),
+				'label'       => __( 'Downloads stored elsewhere on this server', 'gemoffload' ),
+				'description' => __( 'Files outside the media library, such as storeengine_uploads. Copied to the private bucket; the server keeps its copy.', 'gemoffload' ),
 			],
 		];
 	}
 
 	public function register_context(): void {
 		Contexts::register( self::KEY, [
-			'label'       => __( 'StoreEngine downloadable files', 'gemcloud' ),
-			'description' => __( 'Files customers buy. Kept in the private bucket and handed out only through StoreEngine\'s download link, after it checks the order, then as a signed link that expires in minutes.', 'gemcloud' ),
+			'label'       => __( 'StoreEngine downloadable files', 'gemoffload' ),
+			'description' => __( 'Files customers buy. Kept in the private bucket and handed out only through StoreEngine\'s download link, after it checks the order, then as a signed link that expires in minutes.', 'gemoffload' ),
 			'visibility'  => 'private',
 			'path'        => 'private/storeengine/{id}/{uuid}/{filename}',
 			'source'      => 'StoreEngine',
@@ -214,10 +214,10 @@ final class StoreEngine extends Integration {
 		/**
 		 * Fires before a buyer is sent to a signed download link.
 		 *
-		 * @param \GemCloud\Items\Item $item       The stored file.
+		 * @param \GemOffload\Items\Item $item       The stored file.
 		 * @param int                         $product_id Product.
 		 */
-		do_action( 'gemcloud/storeengine/download', $item, (int) $product_id );
+		do_action( 'gemoffload/storeengine/download', $item, (int) $product_id );
 
 		nocache_headers();
 		header( 'Referrer-Policy: no-referrer' );
@@ -234,7 +234,7 @@ final class StoreEngine extends Integration {
 		$reasons = [];
 		foreach ( $this->products_using( $attachment_id ) as $product_id => $name ) {
 			/* translators: 1: file name, 2: product name */
-			$reasons[] = sprintf( __( 'Download "%1$s" of product "%2$s"', 'gemcloud' ), $name, get_the_title( $product_id ) );
+			$reasons[] = sprintf( __( 'Download "%1$s" of product "%2$s"', 'gemoffload' ), $name, get_the_title( $product_id ) );
 		}
 		return $reasons;
 	}

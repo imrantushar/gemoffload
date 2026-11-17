@@ -1,9 +1,9 @@
 <?php
-namespace GemCloud\Jobs;
+namespace GemOffload\Jobs;
 
-use GemCloud\Items\Item;
-use GemCloud\Items\ItemRepository;
-use GemCloud\Manager;
+use GemOffload\Items\Item;
+use GemOffload\Items\ItemRepository;
+use GemOffload\Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -65,7 +65,7 @@ final class CleanupJob {
 		}
 
 		// Product files saved in ways no hook saw (imports, direct edits).
-		\GemCloud\Integrations\Integrations::schedule_reconcile();
+		\GemOffload\Integrations\Integrations::schedule_reconcile();
 
 		// Deletes that are still waiting.
 		if ( ItemRepository::ids_with_status( Item::DELETING, 1 ) ) {

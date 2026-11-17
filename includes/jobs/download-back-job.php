@@ -1,10 +1,10 @@
 <?php
-namespace GemCloud\Jobs;
+namespace GemOffload\Jobs;
 
-use GemCloud\Http\StorageException;
-use GemCloud\Items\Item;
-use GemCloud\Items\ItemRepository;
-use GemCloud\Manager;
+use GemOffload\Http\StorageException;
+use GemOffload\Items\Item;
+use GemOffload\Items\ItemRepository;
+use GemOffload\Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 final class DownloadBackJob {
 
-	const OPTION = 'gemcloud_download_back';
+	const OPTION = 'gemoffload_download_back';
 	const BATCH  = 20;
 
 	public static function state(): array {

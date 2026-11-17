@@ -1,7 +1,7 @@
 <?php
-namespace GemCloud;
+namespace GemOffload;
 
-use GemCloud\Jobs\Queue;
+use GemOffload\Jobs\Queue;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -9,12 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Installer {
 
-	const DB_VERSION_OPTION = 'gemcloud_db_version';
+	const DB_VERSION_OPTION = 'gemoffload_db_version';
 
 	public static function activate(): void {
 		self::create_tables();
 		Settings::ensure_defaults();
-		update_option( self::DB_VERSION_OPTION, GEMCLOUD_DB_VERSION, false );
+		update_option( self::DB_VERSION_OPTION, GEMOFFLOAD_DB_VERSION, false );
 	}
 
 	public static function deactivate(): void {
@@ -22,14 +22,14 @@ class Installer {
 	}
 
 	public static function maybe_upgrade(): void {
-		if ( get_option( self::DB_VERSION_OPTION ) !== GEMCLOUD_DB_VERSION ) {
+		if ( get_option( self::DB_VERSION_OPTION ) !== GEMOFFLOAD_DB_VERSION ) {
 			self::activate();
 		}
 	}
 
 	public static function table(): string {
 		global $wpdb;
-		return $wpdb->prefix . 'gemcloud_items';
+		return $wpdb->prefix . 'gemoffload_items';
 	}
 
 	/**

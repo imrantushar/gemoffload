@@ -1,5 +1,5 @@
 <?php
-namespace GemCloud\Providers;
+namespace GemOffload\Providers;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -64,20 +64,20 @@ final class Presets {
 		return [
 			[
 				'key'         => 'r2',
-				'label'       => __( 'Cloudflare R2', 'gemcloud' ),
-				'description' => __( 'No egress fees. Recommended for downloads and video.', 'gemcloud' ),
+				'label'       => __( 'Cloudflare R2', 'gemoffload' ),
+				'description' => __( 'No egress fees. Recommended for downloads and video.', 'gemoffload' ),
 				'fields'      => [ 'account_id', 'jurisdiction' ],
 			],
 			[
 				'key'         => 'aws',
-				'label'       => __( 'Amazon S3', 'gemcloud' ),
-				'description' => __( 'Egress is charged per GB. Use CloudFront for public files.', 'gemcloud' ),
+				'label'       => __( 'Amazon S3', 'gemoffload' ),
+				'description' => __( 'Egress is charged per GB. Use CloudFront for public files.', 'gemoffload' ),
 				'fields'      => [ 'region' ],
 			],
 			[
 				'key'         => 'custom',
-				'label'       => __( 'S3-compatible', 'gemcloud' ),
-				'description' => __( 'Wasabi, Backblaze B2, DigitalOcean Spaces, MinIO. Untested; works with any SigV4 endpoint.', 'gemcloud' ),
+				'label'       => __( 'S3-compatible', 'gemoffload' ),
+				'description' => __( 'Wasabi, Backblaze B2, DigitalOcean Spaces, MinIO. Untested; works with any SigV4 endpoint.', 'gemoffload' ),
 				'fields'      => [ 'url', 'region', 'path_style' ],
 			],
 		];

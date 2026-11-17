@@ -1,5 +1,5 @@
 <?php
-namespace GemCloud\Http;
+namespace GemOffload\Http;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -35,7 +35,7 @@ final class Client {
 					'timeout'     => 60,
 					'redirection' => 0,
 					'sslverify'   => true,
-					'user-agent'  => 'GemCloud/' . GEMCLOUD_VERSION . '; ' . home_url( '/' ),
+					'user-agent'  => 'GemOffload/' . GEMOFFLOAD_VERSION . '; ' . home_url( '/' ),
 				],
 				$args
 			)
@@ -102,7 +102,7 @@ final class Client {
 
 		if ( '' === $message ) {
 			/* translators: 1: HTTP status, 2: error code */
-			$message = sprintf( __( 'The storage provider answered HTTP %1$d (%2$s).', 'gemcloud' ), $status, $code );
+			$message = sprintf( __( 'The storage provider answered HTTP %1$d (%2$s).', 'gemoffload' ), $status, $code );
 		}
 
 		return new StorageException( $code, $message, $status );

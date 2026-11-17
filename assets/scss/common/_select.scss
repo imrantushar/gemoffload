@@ -1,31 +1,31 @@
-// react-select (components/GCSSelect), the same look as ZenCommunity's:
+// react-select (components/GOSSelect), the same look as ZenCommunity's:
 // rounded control, a floating rounded menu with a soft shadow, rows with a
 // light hover tint, and the chosen row marked with bold text and a check,
 // so hovering and choosing never look alike. Not scoped: the menu is
 // rendered on <body>; colours come from html[data-theme].
 
-.gemcloud-rs {
-	font-family: var(--gemcloud-font);
+.gemoffload-rs {
+	font-family: var(--gemoffload-font);
 	font-size: 14px;
 
 	&__control {
-		height: var(--gemcloud-control-height) !important;
-		min-height: var(--gemcloud-control-height) !important;
-		border: 1px solid var(--gemcloud-border-color) !important;
-		border-radius: var(--gemcloud-control-radius) !important;
-		background: var(--gemcloud-background) !important;
+		height: var(--gemoffload-control-height) !important;
+		min-height: var(--gemoffload-control-height) !important;
+		border: 1px solid var(--gemoffload-border-color) !important;
+		border-radius: var(--gemoffload-control-radius) !important;
+		background: var(--gemoffload-background) !important;
 		box-shadow: none !important;
 		cursor: pointer !important;
 		transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
 		&:hover {
-			border-color: color-mix(in srgb, var(--gemcloud-font-color) 30%, var(--gemcloud-border-color)) !important;
+			border-color: color-mix(in srgb, var(--gemoffload-font-color) 30%, var(--gemoffload-border-color)) !important;
 		}
 
 		// The same focus ring as the text boxes.
 		&--is-focused {
-			border-color: var(--gemcloud-primary) !important;
-			box-shadow: var(--gemcloud-control-focus) !important;
+			border-color: var(--gemoffload-primary) !important;
+			box-shadow: var(--gemoffload-control-focus) !important;
 		}
 
 		&--is-disabled {
@@ -45,7 +45,7 @@
 	}
 
 	&__input-container {
-		color: var(--gemcloud-font-color) !important;
+		color: var(--gemoffload-font-color) !important;
 	}
 
 	// wp-admin's forms.css styles every input; keep react-select's bare.
@@ -55,11 +55,11 @@
 	}
 
 	&__single-value {
-		color: var(--gemcloud-font-color) !important;
+		color: var(--gemoffload-font-color) !important;
 	}
 
 	&__placeholder {
-		color: var(--gemcloud-font-color) !important;
+		color: var(--gemoffload-font-color) !important;
 		opacity: 0.6;
 		white-space: nowrap;
 		overflow: hidden;
@@ -73,7 +73,7 @@
 	&__dropdown-indicator,
 	&__clear-indicator {
 		padding: 0 8px !important;
-		color: var(--gemcloud-font-color) !important;
+		color: var(--gemoffload-font-color) !important;
 		opacity: 0.7;
 		transition: opacity 0.15s ease, transform 0.15s ease !important;
 
@@ -92,12 +92,12 @@
 		max-width: 320px;
 		margin-top: 6px !important;
 		overflow: hidden;
-		border: 1px solid var(--gemcloud-border-color) !important;
+		border: 1px solid var(--gemoffload-border-color) !important;
 		border-radius: 10px !important;
-		background: var(--gemcloud-background) !important;
+		background: var(--gemoffload-background) !important;
 		box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16), 0 2px 4px rgba(0, 0, 0, 0.08) !important;
-		animation: gemcloud-rs-menu-in 0.14s ease-out;
-		font-family: var(--gemcloud-font);
+		animation: gemoffload-rs-menu-in 0.14s ease-out;
+		font-family: var(--gemoffload-font);
 	}
 
 	&__menu-list {
@@ -110,7 +110,7 @@
 		padding: 8px 32px 8px 10px !important;
 		border-radius: 8px;
 		background: transparent !important;
-		color: var(--gemcloud-font-color) !important;
+		color: var(--gemoffload-font-color) !important;
 		font-size: 14px !important;
 		line-height: 20px;
 		white-space: nowrap;
@@ -121,11 +121,11 @@
 
 		&--is-focused,
 		&:hover {
-			background: color-mix(in srgb, var(--gemcloud-font-color) 6%, var(--gemcloud-background)) !important;
+			background: color-mix(in srgb, var(--gemoffload-font-color) 6%, var(--gemoffload-background)) !important;
 		}
 
 		&:active {
-			background: color-mix(in srgb, var(--gemcloud-font-color) 10%, var(--gemcloud-background)) !important;
+			background: color-mix(in srgb, var(--gemoffload-font-color) 10%, var(--gemoffload-background)) !important;
 		}
 
 		&--is-selected {
@@ -139,7 +139,7 @@
 				width: 16px;
 				height: 16px;
 				transform: translateY(-50%);
-				background: var(--gemcloud-primary);
+				background: var(--gemoffload-primary);
 				-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M232.49 80.49l-128 128a12 12 0 0 1-17 0l-56-56a12 12 0 1 1 17-17L96 183 215.51 63.51a12 12 0 0 1 17 17Z'/%3E%3C/svg%3E") center / contain no-repeat;
 				mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M232.49 80.49l-128 128a12 12 0 0 1-17 0l-56-56a12 12 0 1 1 17-17L96 183 215.51 63.51a12 12 0 0 1 17 17Z'/%3E%3C/svg%3E") center / contain no-repeat;
 			}
@@ -154,11 +154,11 @@
 	&__menu-notice {
 		padding: 10px !important;
 		font-size: 14px;
-		color: color-mix(in srgb, var(--gemcloud-font-color) 60%, transparent) !important;
+		color: color-mix(in srgb, var(--gemoffload-font-color) 60%, transparent) !important;
 	}
 }
 
-@keyframes gemcloud-rs-menu-in {
+@keyframes gemoffload-rs-menu-in {
 	from {
 		opacity: 0;
 		transform: translateY(-4px);
@@ -171,7 +171,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.gemcloud-rs__menu {
+	.gemoffload-rs__menu {
 		animation: none;
 	}
 }

@@ -1,7 +1,7 @@
 <?php
-namespace GemCloud\Items;
+namespace GemOffload\Items;
 
-use GemCloud\Installer;
+use GemOffload\Installer;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -259,7 +259,7 @@ final class ItemRepository {
 				$params[] = (string) $context;
 			}
 			if ( ! empty( $args['private_by'] ) ) {
-				$any[]    = "( source_type = 'attachment' AND source_id IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_gemcloud_private_by' AND meta_value LIKE %s ) )";
+				$any[]    = "( source_type = 'attachment' AND source_id IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_gemoffload_private_by' AND meta_value LIKE %s ) )";
 				$params[] = '%' . $wpdb->esc_like( '"' . $args['private_by'] . '"' ) . '%';
 			}
 			$where[] = '( ' . implode( ' OR ', $any ) . ' )';

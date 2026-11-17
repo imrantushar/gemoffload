@@ -1,0 +1,49 @@
+.gemoffload-topbar-nav {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+
+	&__link {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 0 14px;
+		height: 36px;
+		border: 1px solid transparent;
+		border-radius: 6px;
+		font-size: 13px;
+		font-weight: 500;
+		color: var(--gemoffload-font-color);
+		text-decoration: none;
+		white-space: nowrap;
+		line-height: 1;
+		transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+
+		svg {
+			flex-shrink: 0;
+		}
+
+		&:hover,
+		&:focus-visible {
+			background: var(--gemoffload-secondary-color);
+			color: var(--gemoffload-font-color);
+			box-shadow: none;
+			outline: none;
+		}
+	}
+
+	&__link.gemoffload-topbar-nav__link--active,
+	&__link.gemoffload-topbar-nav__link--active:hover {
+		background: var(--gemoffload-second-primary);
+		border-color: transparent;
+		color: var(--gemoffload-primary);
+		font-weight: 600;
+	}
+}
+
+@media (max-width: 900px) {
+	.gemoffload-topbar-nav {
+		display: none;
+	}
+}
