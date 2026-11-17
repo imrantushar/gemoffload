@@ -4,7 +4,7 @@ Tags: offload media, amazon s3, cloudflare r2, cdn, media library
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPL-3.0+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -109,6 +109,10 @@ Use Tools → Download back first to bring every file back to the server. Files 
 Yes. Define the `GEMOFFLOAD_*` constants in wp-config.php (see Description). Keys saved in the admin are encrypted with libsodium.
 
 == Changelog ==
+
+= 1.1.0 =
+
+* Maintenance: verified compatibility with PHP 7.4 through 8.4 and WordPress 7.1, plus hardening and build cleanup for the WordPress.org release.
 
 = 1.0.0 =
 

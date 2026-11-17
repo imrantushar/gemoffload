@@ -3,7 +3,7 @@
  * Plugin Name:		GemOffload
  * Plugin URI:		https://github.com/imrantushar/gemoffload
  * Description:		Offload the media library and protected files to Amazon S3, Cloudflare R2 or any S3-compatible storage — public files from your CDN, private files through short-lived signed URLs.
- * Version:			1.0.0
+ * Version:			1.1.0
  * Requires at least:	6.4
  * Requires PHP:		7.4
  * Author:			Kodezen
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GEMOFFLOAD_VERSION', '1.0.0' );
+define( 'GEMOFFLOAD_VERSION', '1.1.0' );
 define( 'GEMOFFLOAD_DB_VERSION', '1.0.0' );
 define( 'GEMOFFLOAD_PLUGIN_SLUG', 'gemoffload' );
 define( 'GEMOFFLOAD_PLUGIN_FILE', __FILE__ );

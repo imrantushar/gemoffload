@@ -1,6 +1,6 @@
 {
   "name": "gemoffload",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Offload WordPress media and protected files to Amazon S3 and Cloudflare R2.",
   "scripts": {
     "build": "wp-scripts build",
