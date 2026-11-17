@@ -2,7 +2,7 @@
 /**
  * Removes exactly what seed.php created, cloud copies included.
  *
- *     wp eval-file wp-content/plugins/gemcloud/tests/fixture/cleanup.php
+ *     wp eval-file wp-content/plugins/gemoffload/tests/fixture/cleanup.php
  *
  * phpcs:ignoreFile -- developer fixture.
  */
@@ -11,9 +11,9 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
 	exit;
 }
 
-$fx = get_option( 'gemcloud_fixture' );
+$fx = get_option( 'gemoffload_fixture' );
 if ( ! is_array( $fx ) ) {
-	WP_CLI::error( 'No test content recorded (gemcloud_fixture option is missing).' );
+	WP_CLI::error( 'No test content recorded (gemoffload_fixture option is missing).' );
 }
 
 global $wpdb;
@@ -32,7 +32,7 @@ foreach ( $fx['prices'] as $price_id ) {
 	$wpdb->delete( $wpdb->prefix . 'storeengine_product_price', [ 'id' => $price_id ] );
 }
 
-// Courses, products (their cloud copies are deleted by GemCloud's hooks).
+// Courses, products (their cloud copies are deleted by GemOffload's hooks).
 foreach ( $fx['posts'] as $post_id ) {
 	if ( 'academy_courses' === get_post_type( $post_id ) ) {
 		delete_user_meta( get_post_field( 'post_author', $post_id ), 'academy_instructor_course_id', $post_id );
@@ -67,5 +67,5 @@ foreach ( $fx['files'] as $file ) {
 	}
 }
 
-delete_option( 'gemcloud_fixture' );
+delete_option( 'gemoffload_fixture' );
 WP_CLI::success( 'Test content removed. Cloud copies are deleted by the background queue.' );

@@ -1,10 +1,10 @@
 <?php
-namespace GemCloud\Cli;
+namespace GemOffload\Cli;
 
-use GemCloud\Backups\Backups;
-use GemCloud\Jobs\BackupJob;
-use GemCloud\Jobs\UploadJob;
-use GemCloud\Manager;
+use GemOffload\Backups\Backups;
+use GemOffload\Jobs\BackupJob;
+use GemOffload\Jobs\UploadJob;
+use GemOffload\Manager;
 use WP_CLI;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,7 +26,7 @@ final class BackupCommand {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp gemcloud backup create --sync
+	 *     wp gemoffload backup create --sync
 	 */
 	public function create( array $args, array $assoc ): void {
 		$run = Backups::start( 'cli' );
@@ -35,15 +35,15 @@ final class BackupCommand {
 		}
 
 		if ( empty( $assoc['sync'] ) ) {
-			WP_CLI::success( sprintf( 'Backup %d queued (%d tables). Check it with "wp gemcloud backup list".', $run['id'], count( $run['tables'] ) ) );
+			WP_CLI::success( sprintf( 'Backup %d queued (%d tables). Check it with "wp gemoffload backup list".', $run['id'], count( $run['tables'] ) ) );
 			return;
 		}
 
 		// Export every slice, then upload, without waiting for cron.
-		as_unschedule_all_actions( \GemCloud\Jobs\Queue::BACKUP, [], \GemCloud\Jobs\Queue::GROUP );
+		as_unschedule_all_actions( \GemOffload\Jobs\Queue::BACKUP, [], \GemOffload\Jobs\Queue::GROUP );
 		do {
 			BackupJob::run();
-			as_unschedule_all_actions( \GemCloud\Jobs\Queue::BACKUP, [], \GemCloud\Jobs\Queue::GROUP );
+			as_unschedule_all_actions( \GemOffload\Jobs\Queue::BACKUP, [], \GemOffload\Jobs\Queue::GROUP );
 			$current = get_option( Backups::RUN_OPTION, null );
 		} while ( is_array( $current ) && 'exporting' === $current['status'] );
 
@@ -127,7 +127,7 @@ final class BackupCommand {
 
 		WP_CLI::confirm( sprintf( 'Replace every table in the %s database with backup %d from %s UTC? Changes made since then are lost.', DB_NAME, $item->source_id, gmdate( 'Y-m-d H:i', $item->source_id ) ), $assoc );
 
-		$file = get_temp_dir() . 'gemcloud-restore-' . wp_generate_password( 24, false ) . '.sql.gz';
+		$file = get_temp_dir() . 'gemoffload-restore-' . wp_generate_password( 24, false ) . '.sql.gz';
 		WP_CLI::log( 'Downloading ' . size_format( (int) $item->size_bytes, 1 ) . '…' );
 		try {
 			Manager::driver()->get( $item->bucket, $item->object_key, $file );

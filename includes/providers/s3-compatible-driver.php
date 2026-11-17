@@ -1,13 +1,13 @@
 <?php
-namespace GemCloud\Providers;
+namespace GemOffload\Providers;
 
-use GemCloud\Contracts\StorageProvider;
-use GemCloud\Http\Client;
-use GemCloud\Http\StorageException;
-use GemCloud\Security\Credentials;
-use GemCloud\Settings;
-use GemCloud\Signing\Presigner;
-use GemCloud\Signing\SigV4;
+use GemOffload\Contracts\StorageProvider;
+use GemOffload\Http\Client;
+use GemOffload\Http\StorageException;
+use GemOffload\Security\Credentials;
+use GemOffload\Settings;
+use GemOffload\Signing\Presigner;
+use GemOffload\Signing\SigV4;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -43,7 +43,7 @@ final class S3CompatibleDriver implements StorageProvider {
 	public function put( string $bucket, string $key, string $local_path, array $headers = [] ): ObjectInfo {
 		if ( ! is_readable( $local_path ) ) {
 			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- internal exception, caught and stored; never echoed as HTML.
-			throw new StorageException( 'LocalFileMissing', sprintf( /* translators: %s: file path */ __( 'The local file %s is missing.', 'gemcloud' ), $local_path ) );
+			throw new StorageException( 'LocalFileMissing', sprintf( /* translators: %s: file path */ __( 'The local file %s is missing.', 'gemoffload' ), $local_path ) );
 		}
 
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local file read for upload.
@@ -100,7 +100,7 @@ final class S3CompatibleDriver implements StorageProvider {
 
 	public function get( string $bucket, string $key, string $save_to ): void {
 		wp_mkdir_p( dirname( $save_to ) );
-		$tmp = $save_to . '.gemcloud-' . wp_generate_password( 6, false ) . '.part';
+		$tmp = $save_to . '.gemoffload-' . wp_generate_password( 6, false ) . '.part';
 
 		$this->call( 'GET', $bucket, $key, [], [], '', [
 			'timeout'  => 600,
@@ -112,7 +112,7 @@ final class S3CompatibleDriver implements StorageProvider {
 		if ( ! @rename( $tmp, $save_to ) ) {
 			wp_delete_file( $tmp );
 			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- internal exception, caught and stored; never echoed as HTML.
-			throw new StorageException( 'LocalWriteFailed', sprintf( /* translators: %s: file path */ __( 'Could not write %s.', 'gemcloud' ), $save_to ) );
+			throw new StorageException( 'LocalWriteFailed', sprintf( /* translators: %s: file path */ __( 'Could not write %s.', 'gemoffload' ), $save_to ) );
 		}
 	}
 
@@ -189,7 +189,7 @@ final class S3CompatibleDriver implements StorageProvider {
 
 		if ( '' === $id ) {
 			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- internal exception, caught and stored; never echoed as HTML.
-			throw new StorageException( 'MultipartStartFailed', __( 'The provider did not return a multipart upload ID.', 'gemcloud' ) );
+			throw new StorageException( 'MultipartStartFailed', __( 'The provider did not return a multipart upload ID.', 'gemoffload' ) );
 		}
 		return $id;
 	}
@@ -203,7 +203,7 @@ final class S3CompatibleDriver implements StorageProvider {
 		$etag = trim( $response['headers']['etag'] ?? '', '"' );
 		if ( '' === $etag ) {
 			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- internal exception, caught and stored; never echoed as HTML.
-			throw new StorageException( 'MultipartPartFailed', __( 'The provider did not return an ETag for the part.', 'gemcloud' ) );
+			throw new StorageException( 'MultipartPartFailed', __( 'The provider did not return an ETag for the part.', 'gemoffload' ) );
 		}
 		return $etag;
 	}
@@ -266,8 +266,8 @@ final class S3CompatibleDriver implements StorageProvider {
 	}
 
 	public function test( string $bucket ): array {
-		$key    = 'gemcloud-probe/' . wp_generate_password( 12, false ) . '.txt';
-		$body   = 'GemCloud connection test ' . gmdate( 'c' );
+		$key    = 'gemoffload-probe/' . wp_generate_password( 12, false ) . '.txt';
+		$body   = 'GemOffload connection test ' . gmdate( 'c' );
 		$steps  = [];
 		$report = [
 			'ok'         => false,
@@ -313,7 +313,7 @@ final class S3CompatibleDriver implements StorageProvider {
 			} );
 
 			if ( strlen( $body ) !== $info ) {
-				throw new StorageException( 'SizeMismatch', sprintf( /* translators: 1: bytes sent, 2: bytes reported */ __( 'The probe object came back with a different size: sent %1$d bytes, the bucket reports %2$d.', 'gemcloud' ), strlen( $body ), $info ) );
+				throw new StorageException( 'SizeMismatch', sprintf( /* translators: 1: bytes sent, 2: bytes reported */ __( 'The probe object came back with a different size: sent %1$d bytes, the bucket reports %2$d.', 'gemoffload' ), strlen( $body ), $info ) );
 			}
 
 			$run( 'delete', function () use ( $bucket, $key ) {
@@ -344,7 +344,7 @@ final class S3CompatibleDriver implements StorageProvider {
 		if ( null !== $report['clock_skew'] && abs( $report['clock_skew'] ) > 300 ) {
 			$report['clock_warning'] = sprintf(
 				/* translators: %d: seconds */
-				__( 'This server\'s clock is %d seconds off the provider\'s. Signed requests fail beyond 15 minutes.', 'gemcloud' ),
+				__( 'This server\'s clock is %d seconds off the provider\'s. Signed requests fail beyond 15 minutes.', 'gemoffload' ),
 				abs( $report['clock_skew'] )
 			);
 		}

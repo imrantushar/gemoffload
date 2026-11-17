@@ -1,15 +1,15 @@
 <?php
-namespace GemCloud\Cli;
+namespace GemOffload\Cli;
 
-use GemCloud\Http\StorageException;
-use GemCloud\Items\Item;
-use GemCloud\Items\ItemRepository;
-use GemCloud\Jobs\DownloadBackJob;
-use GemCloud\Jobs\Queue;
-use GemCloud\Jobs\UploadJob;
-use GemCloud\Manager;
-use GemCloud\Media\MediaHooks;
-use GemCloud\Settings;
+use GemOffload\Http\StorageException;
+use GemOffload\Items\Item;
+use GemOffload\Items\ItemRepository;
+use GemOffload\Jobs\DownloadBackJob;
+use GemOffload\Jobs\Queue;
+use GemOffload\Jobs\UploadJob;
+use GemOffload\Manager;
+use GemOffload\Media\MediaHooks;
+use GemOffload\Settings;
 use WP_CLI;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,7 +26,7 @@ final class Command {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp gemcloud status
+	 *     wp gemoffload status
 	 */
 	public function status(): void {
 		$stats = ItemRepository::stats();
@@ -72,7 +72,7 @@ final class Command {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp gemcloud migrate --sync
+	 *     wp gemoffload migrate --sync
 	 */
 	public function migrate( array $args, array $assoc ): void {
 		$this->require_available();
@@ -211,16 +211,16 @@ final class Command {
 	/**
 	 * Make every file Academy LMS and StoreEngine use private, now.
 	 *
-	 * Uploads still run in the queue; follow with `wp gemcloud run`.
+	 * Uploads still run in the queue; follow with `wp gemoffload run`.
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp gemcloud reconcile
+	 *     wp gemoffload reconcile
 	 */
 	public function reconcile(): void {
 		$this->require_available();
 
-		$active = \GemCloud\Integrations\Integrations::switched_on();
+		$active = \GemOffload\Integrations\Integrations::switched_on();
 		if ( ! $active ) {
 			WP_CLI::warning( 'No product integration is switched on.' );
 			return;
@@ -228,9 +228,9 @@ final class Command {
 
 		$offset = 0;
 		do {
-			$checked = \GemCloud\Jobs\ReconcileJob::run( $offset );
+			$checked = \GemOffload\Jobs\ReconcileJob::run( $offset );
 			$offset += $checked;
-		} while ( \GemCloud\Jobs\ReconcileJob::BATCH === $checked );
+		} while ( \GemOffload\Jobs\ReconcileJob::BATCH === $checked );
 
 		// The last batch queued nothing, but an earlier one may have.
 		as_unschedule_all_actions( Queue::RECONCILE, null, Queue::GROUP );

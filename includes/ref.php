@@ -1,5 +1,5 @@
 <?php
-namespace GemCloud;
+namespace GemOffload;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -7,11 +7,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Names an object by context and the owning plugin's own ID, so plugins never
- * store bucket keys. Serialises as gemcloud://<context>/<id>.
+ * store bucket keys. Serialises as gemoffload://<context>/<id>.
  */
 final class Ref {
 
-	const SCHEME = 'gemcloud://';
+	const SCHEME = 'gemoffload://';
 
 	public string $context;
 	public int $id;
@@ -34,7 +34,7 @@ final class Ref {
 	}
 
 	public static function from_uri( string $uri ): ?self {
-		if ( ! preg_match( '#^gemcloud://([a-z0-9._-]+)/(\d+)$#', $uri, $m ) ) {
+		if ( ! preg_match( '#^gemoffload://([a-z0-9._-]+)/(\d+)$#', $uri, $m ) ) {
 			return null;
 		}
 		return new self( $m[1], (int) $m[2] );

@@ -1,5 +1,5 @@
 <?php
-namespace GemCloud\Utils;
+namespace GemOffload\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -12,29 +12,29 @@ class Helper {
 	 */
 	public static function get_admin_menu_list(): array {
 		$menu = [
-			GEMCLOUD_PLUGIN_SLUG               => [
-				'parent_slug' => GEMCLOUD_PLUGIN_SLUG,
-				'title'       => __( 'Dashboard', 'gemcloud' ),
+			GEMOFFLOAD_PLUGIN_SLUG               => [
+				'parent_slug' => GEMOFFLOAD_PLUGIN_SLUG,
+				'title'       => __( 'Dashboard', 'gemoffload' ),
 				'capability'  => 'manage_options',
 			],
-			GEMCLOUD_PLUGIN_SLUG . '-files'    => [
-				'parent_slug' => GEMCLOUD_PLUGIN_SLUG,
-				'title'       => __( 'Files', 'gemcloud' ),
+			GEMOFFLOAD_PLUGIN_SLUG . '-files'    => [
+				'parent_slug' => GEMOFFLOAD_PLUGIN_SLUG,
+				'title'       => __( 'Files', 'gemoffload' ),
 				'capability'  => 'manage_options',
 			],
-			GEMCLOUD_PLUGIN_SLUG . '-tools'    => [
-				'parent_slug' => GEMCLOUD_PLUGIN_SLUG,
-				'title'       => __( 'Tools', 'gemcloud' ),
+			GEMOFFLOAD_PLUGIN_SLUG . '-tools'    => [
+				'parent_slug' => GEMOFFLOAD_PLUGIN_SLUG,
+				'title'       => __( 'Tools', 'gemoffload' ),
 				'capability'  => 'manage_options',
 			],
-			GEMCLOUD_PLUGIN_SLUG . '-settings' => [
-				'parent_slug' => GEMCLOUD_PLUGIN_SLUG,
-				'title'       => __( 'Settings', 'gemcloud' ),
+			GEMOFFLOAD_PLUGIN_SLUG . '-settings' => [
+				'parent_slug' => GEMOFFLOAD_PLUGIN_SLUG,
+				'title'       => __( 'Settings', 'gemoffload' ),
 				'capability'  => 'manage_options',
 			],
 		];
 
-		return apply_filters( 'gemcloud/admin/menu_list', $menu );
+		return apply_filters( 'gemoffload/admin/menu_list', $menu );
 	}
 
 	public static function format_bytes( int $bytes ): string {

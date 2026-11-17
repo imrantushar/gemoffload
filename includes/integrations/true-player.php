@@ -1,14 +1,14 @@
 <?php
-namespace GemCloud\Integrations;
+namespace GemOffload\Integrations;
 
-use GemCloud\Contexts;
-use GemCloud\Items\Item;
-use GemCloud\Items\ItemRepository;
-use GemCloud\Manager;
-use GemCloud\Media\PrivateDelivery;
-use GemCloud\Media\UrlRewriter;
-use GemCloud\Ref;
-use GemCloud\Settings;
+use GemOffload\Contexts;
+use GemOffload\Items\Item;
+use GemOffload\Items\ItemRepository;
+use GemOffload\Manager;
+use GemOffload\Media\PrivateDelivery;
+use GemOffload\Media\UrlRewriter;
+use GemOffload\Ref;
+use GemOffload\Settings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -56,7 +56,7 @@ final class TruePlayer extends Integration {
 	}
 
 	public function label(): string {
-		return __( 'TruePlayer', 'gemcloud' );
+		return __( 'TruePlayer', 'gemoffload' );
 	}
 
 	public function contexts(): array {
@@ -70,24 +70,24 @@ final class TruePlayer extends Integration {
 	public function kinds(): array {
 		return [
 			'private_videos' => [
-				'label'       => __( 'Private videos', 'gemcloud' ),
-				'description' => __( 'The video or audio file of videos switched to "Private" in TruePlayer. Plays only for viewers TruePlayer lets in.', 'gemcloud' ),
+				'label'       => __( 'Private videos', 'gemoffload' ),
+				'description' => __( 'The video or audio file of videos switched to "Private" in TruePlayer. Plays only for viewers TruePlayer lets in.', 'gemoffload' ),
 			],
 			'subtitles'      => [
-				'label'       => __( 'Subtitles of private videos', 'gemcloud' ),
-				'description' => __( 'Caption files (.vtt) of those videos.', 'gemcloud' ),
+				'label'       => __( 'Subtitles of private videos', 'gemoffload' ),
+				'description' => __( 'Caption files (.vtt) of those videos.', 'gemoffload' ),
 			],
 			'other_files'    => [
-				'label'       => __( 'Files stored outside the media library', 'gemcloud' ),
-				'description' => __( 'Videos, posters and captions picked by URL from elsewhere in uploads, such as ZenCommunity uploads. Copied to the cloud; the server keeps its copy.', 'gemcloud' ),
+				'label'       => __( 'Files stored outside the media library', 'gemoffload' ),
+				'description' => __( 'Videos, posters and captions picked by URL from elsewhere in uploads, such as ZenCommunity uploads. Copied to the cloud; the server keeps its copy.', 'gemoffload' ),
 			],
 		];
 	}
 
 	public function register_context(): void {
 		Contexts::register( self::KEY, [
-			'label'       => __( 'TruePlayer videos', 'gemcloud' ),
-			'description' => __( 'Self-hosted videos play from the cloud. Videos switched to "Private" in TruePlayer are kept in the private bucket and open only for viewers TruePlayer allows. Posters stay public.', 'gemcloud' ),
+			'label'       => __( 'TruePlayer videos', 'gemoffload' ),
+			'description' => __( 'Self-hosted videos play from the cloud. Videos switched to "Private" in TruePlayer are kept in the private bucket and open only for viewers TruePlayer allows. Posters stay public.', 'gemoffload' ),
 			'visibility'  => 'private',
 			'path'        => 'private/trueplayer/{id}/{uuid}/{filename}',
 			'source'      => 'TruePlayer',
@@ -97,8 +97,8 @@ final class TruePlayer extends Integration {
 
 		// Switched with the context above.
 		Contexts::register( self::FILES, [
-			'label'       => __( 'TruePlayer files outside the media library', 'gemcloud' ),
-			'description' => __( 'Public copies of files TruePlayer plays from elsewhere in uploads.', 'gemcloud' ),
+			'label'       => __( 'TruePlayer files outside the media library', 'gemoffload' ),
+			'description' => __( 'Public copies of files TruePlayer plays from elsewhere in uploads.', 'gemoffload' ),
 			'visibility'  => 'public',
 			'path'        => '{prefix}/{file}',
 			'source'      => 'TruePlayer',
@@ -115,7 +115,7 @@ final class TruePlayer extends Integration {
 
 		add_filter( 'trueplayer/config', [ $this, 'play_from_cloud' ], 20, 2 );
 		add_filter( 'rest_request_before_callbacks', [ $this, 'stream_from_cloud' ], 10, 3 );
-		add_filter( 'gemcloud/can_access', [ $this, 'own_file_access' ], 10, 2 );
+		add_filter( 'gemoffload/can_access', [ $this, 'own_file_access' ], 10, 2 );
 	}
 
 	/**
@@ -328,7 +328,7 @@ final class TruePlayer extends Integration {
 		// REST requests without a nonce run logged out; the player's video
 		// request carries the login cookie, so read the viewer from it.
 		if ( ! $this->viewer_allowed( $video_id, (int) wp_validate_auth_cookie( '', 'logged_in' ) ) ) {
-			return new \WP_Error( 'gemcloud_forbidden', __( 'You don\'t have access to this video.', 'gemcloud' ), [ 'status' => 403 ] );
+			return new \WP_Error( 'gemoffload_forbidden', __( 'You don\'t have access to this video.', 'gemoffload' ), [ 'status' => 403 ] );
 		}
 
 		$url = Manager::signed_url_for( $item, [
@@ -346,7 +346,7 @@ final class TruePlayer extends Integration {
 	}
 
 	/**
-	 * /?gemcloud_file= links of private copies of files outside the media library.
+	 * /?gemoffload_file= links of private copies of files outside the media library.
 	 *
 	 * @param bool $allowed
 	 * @param Item $item
@@ -408,9 +408,9 @@ final class TruePlayer extends Integration {
 				}
 				$reasons[] = 'subtitles' === $kind
 					/* translators: %s: video title */
-					? sprintf( __( 'Subtitles of private video "%s"', 'gemcloud' ), get_the_title( $video_id ) )
+					? sprintf( __( 'Subtitles of private video "%s"', 'gemoffload' ), get_the_title( $video_id ) )
 					/* translators: %s: video title */
-					: sprintf( __( 'Private video "%s"', 'gemcloud' ), get_the_title( $video_id ) );
+					: sprintf( __( 'Private video "%s"', 'gemoffload' ), get_the_title( $video_id ) );
 			}
 		}
 		return array_values( array_unique( $reasons ) );

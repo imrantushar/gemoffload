@@ -1,5 +1,5 @@
 <?php
-namespace GemCloud\Providers;
+namespace GemOffload\Providers;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

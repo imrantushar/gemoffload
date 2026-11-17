@@ -1,8 +1,8 @@
 <?php
-namespace GemCloud\Jobs;
+namespace GemOffload\Jobs;
 
-use GemCloud\Manager;
-use GemCloud\Media\MediaHooks;
+use GemOffload\Manager;
+use GemOffload\Media\MediaHooks;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 final class MigrateJob {
 
-	const OPTION = 'gemcloud_migration';
+	const OPTION = 'gemoffload_migration';
 	const BATCH  = 50;
 
 	public static function state(): array {

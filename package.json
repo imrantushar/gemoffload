@@ -1,5 +1,5 @@
 {
-  "name": "gemcloud",
+  "name": "gemoffload",
   "version": "1.0.0",
   "description": "Offload WordPress media and protected files to Amazon S3 and Cloudflare R2.",
   "scripts": {

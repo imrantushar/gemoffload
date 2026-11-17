@@ -2,14 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-#gemcloud-app.gemcloud-scope {
-	background: var(--gemcloud-body-background);
-	color: var(--gemcloud-font-color);
+#gemoffload-app.gemoffload-scope {
+	background: var(--gemoffload-body-background);
+	color: var(--gemoffload-font-color);
 	min-height: calc(100vh - 32px);
 }
 
-html:has(#gemcloud-app),
-body:has(#gemcloud-app) {
+html:has(#gemoffload-app),
+body:has(#gemoffload-app) {
 	scrollbar-width: none;
 
 	&::-webkit-scrollbar {
@@ -17,22 +17,22 @@ body:has(#gemcloud-app) {
 	}
 }
 
-.gemcloud-route {
-	animation: gemcloud-route-in 0.28s ease;
+.gemoffload-route {
+	animation: gemoffload-route-in 0.28s ease;
 }
 
-@keyframes gemcloud-route-in {
+@keyframes gemoffload-route-in {
 	from { opacity: 0; }
 	to { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.gemcloud-route { animation: none; }
+	.gemoffload-route { animation: none; }
 }
 
 // Scoped reset (Tailwind preflight is off so WP admin stays untouched).
-.gemcloud-scope {
-	font-family: var(--gemcloud-font);
+.gemoffload-scope {
+	font-family: var(--gemoffload-font);
 	line-height: 1.5;
 
 	*, *::before, *::after {
@@ -40,7 +40,7 @@ body:has(#gemcloud-app) {
 		border-width: 0;
 		border-style: solid;
 		/* Token, not currentColor: a bare `border` should be a hairline, not ink. */
-		border-color: var(--gemcloud-border-color);
+		border-color: var(--gemoffload-border-color);
 	}
 
 	h1, h2, h3, h4, h5, h6, p {
@@ -90,7 +90,7 @@ body:has(#gemcloud-app) {
 	}
 
 	input[type='checkbox'] {
-		border: 1px solid var(--gemcloud-border-color);
+		border: 1px solid var(--gemoffload-border-color);
 	}
 }
 

@@ -1,4 +1,4 @@
-.gemcloud-notification {
+.gemoffload-notification {
 	position: fixed;
 	left: 50%;
 	bottom: 50px;
@@ -8,19 +8,19 @@
 	justify-content: space-between;
 	gap: 20px;
 	padding: 10px 16px;
-	box-shadow: var(--gemcloud-notification-shadow);
+	box-shadow: var(--gemoffload-notification-shadow);
 	border-radius: 4px;
 	min-width: 400px;
 	max-width: calc(100vw - 32px);
 	z-index: 99999;
-	font-family: var(--gemcloud-font);
+	font-family: var(--gemoffload-font);
 	font-size: 14px;
-	color: var(--gemcloud-white);
-	background: var(--gemcloud-success);
-	animation: gemcloud-toast-in 0.2s ease;
+	color: var(--gemoffload-white);
+	background: var(--gemoffload-success);
+	animation: gemoffload-toast-in 0.2s ease;
 
 	&--error {
-		background: var(--gemcloud-danger);
+		background: var(--gemoffload-danger);
 	}
 
 	&--warning {
@@ -28,7 +28,7 @@
 	}
 
 	&--info {
-		background: var(--gemcloud-primary);
+		background: var(--gemoffload-primary);
 	}
 
 	&__message {
@@ -47,13 +47,13 @@
 	}
 }
 
-@keyframes gemcloud-toast-in {
+@keyframes gemoffload-toast-in {
 	from { opacity: 0; transform: translate(-50%, 8px); }
 	to { opacity: 1; transform: translate(-50%, 0); }
 }
 
 @media (max-width: 600px) {
-	.gemcloud-notification {
+	.gemoffload-notification {
 		min-width: 0;
 		width: calc(100vw - 32px);
 	}

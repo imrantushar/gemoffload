@@ -1,5 +1,5 @@
 <?php
-namespace GemCloud\Utils;
+namespace GemOffload\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -46,7 +46,7 @@ final class Conflicts {
 		 *
 		 * @param string[] $found Plugin names.
 		 */
-		return array_values( array_unique( (array) apply_filters( 'gemcloud/conflicts', $found ) ) );
+		return array_values( array_unique( (array) apply_filters( 'gemoffload/conflicts', $found ) ) );
 	}
 
 	public static function media_blocked(): bool {

@@ -1,15 +1,15 @@
 <?php
-namespace GemCloud;
+namespace GemOffload;
 
-use GemCloud\Admin\Assets;
-use GemCloud\Admin\Menu;
-use GemCloud\Admin\Notices;
-use GemCloud\Api\RestController;
-use GemCloud\Backups\Backups;
-use GemCloud\Integrations\Integrations;
-use GemCloud\Jobs\Queue;
-use GemCloud\Media\MediaHooks;
-use GemCloud\Media\PrivateDelivery;
+use GemOffload\Admin\Assets;
+use GemOffload\Admin\Menu;
+use GemOffload\Admin\Notices;
+use GemOffload\Api\RestController;
+use GemOffload\Backups\Backups;
+use GemOffload\Integrations\Integrations;
+use GemOffload\Jobs\Queue;
+use GemOffload\Media\MediaHooks;
+use GemOffload\Media\PrivateDelivery;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -47,7 +47,7 @@ final class Plugin {
 		RestController::init();
 
 		// A context switched back on, or a bucket just connected.
-		add_action( 'gemcloud/settings_saved', [ Integrations::class, 'schedule_reconcile' ] );
+		add_action( 'gemoffload/settings_saved', [ Integrations::class, 'schedule_reconcile' ] );
 
 		if ( is_admin() ) {
 			( new Menu() )->register();
@@ -56,8 +56,8 @@ final class Plugin {
 		}
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
-			\WP_CLI::add_command( 'gemcloud', Cli\Command::class );
-			\WP_CLI::add_command( 'gemcloud backup', Cli\BackupCommand::class );
+			\WP_CLI::add_command( 'gemoffload', Cli\Command::class );
+			\WP_CLI::add_command( 'gemoffload backup', Cli\BackupCommand::class );
 		}
 	}
 
@@ -68,7 +68,7 @@ final class Plugin {
 		 * Fires once the storage API is ready (init, priority 1). Products
 		 * register their file contexts here with Manager::register_context().
 		 */
-		do_action( 'gemcloud/loaded', GEMCLOUD_VERSION );
+		do_action( 'gemoffload/loaded', GEMOFFLOAD_VERSION );
 	}
 
 }

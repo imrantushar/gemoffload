@@ -1,6 +1,6 @@
 <?php return array(
     'root' => array(
-        'name' => 'kodezen/gemcloud',
+        'name' => 'kodezen/gemoffload',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
         'reference' => '77dcff3b3980e791207b045bc2f73002bc9b07e5',
@@ -10,7 +10,7 @@
         'dev' => false,
     ),
     'versions' => array(
-        'kodezen/gemcloud' => array(
+        'kodezen/gemoffload' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
             'reference' => '77dcff3b3980e791207b045bc2f73002bc9b07e5',

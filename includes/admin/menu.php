@@ -1,7 +1,7 @@
 <?php
-namespace GemCloud\Admin;
+namespace GemOffload\Admin;
 
-use GemCloud\Utils\Helper;
+use GemOffload\Utils\Helper;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -20,22 +20,22 @@ class Menu {
 	 * since the sidebar is on every screen.
 	 */
 	public function menu_css(): void {
-		$menu  = '#adminmenu #toplevel_page_' . GEMCLOUD_PLUGIN_SLUG . ' > .wp-submenu > li';
+		$menu  = '#adminmenu #toplevel_page_' . GEMOFFLOAD_PLUGIN_SLUG . ' > .wp-submenu > li';
 		$after = [
-			$menu . ':has(> a[href$="page=' . GEMCLOUD_PLUGIN_SLUG . '"])',
-			$menu . ':has(+ li > a[href$="page=' . GEMCLOUD_PLUGIN_SLUG . '-settings"])',
+			$menu . ':has(> a[href$="page=' . GEMOFFLOAD_PLUGIN_SLUG . '"])',
+			$menu . ':has(+ li > a[href$="page=' . GEMOFFLOAD_PLUGIN_SLUG . '-settings"])',
 		];
-		wp_register_style( 'gemcloud-menu', false, [], GEMCLOUD_VERSION );
-		wp_enqueue_style( 'gemcloud-menu' );
-		wp_add_inline_style( 'gemcloud-menu', implode( ',', $after ) . '{margin-bottom:6px;padding-bottom:7px;border-bottom:1px solid rgba(255,255,255,.14)}' );
+		wp_register_style( 'gemoffload-menu', false, [], GEMOFFLOAD_VERSION );
+		wp_enqueue_style( 'gemoffload-menu' );
+		wp_add_inline_style( 'gemoffload-menu', implode( ',', $after ) . '{margin-bottom:6px;padding-bottom:7px;border-bottom:1px solid rgba(255,255,255,.14)}' );
 	}
 
 	public function admin_menu(): void {
-		$title = apply_filters( 'gemcloud/admin/toplevel_menu_title', __( 'GemCloud', 'gemcloud' ) );
+		$title = apply_filters( 'gemoffload/admin/toplevel_menu_title', __( 'GemOffload', 'gemoffload' ) );
 
 		$menu_title = esc_html( $title );
 
-		add_menu_page( $title, $menu_title, 'manage_options', GEMCLOUD_PLUGIN_SLUG, [ $this, 'load_main_template' ], self::icon(), 81 );
+		add_menu_page( $title, $menu_title, 'manage_options', GEMOFFLOAD_PLUGIN_SLUG, [ $this, 'load_main_template' ], self::icon(), 81 );
 
 		foreach ( Helper::get_admin_menu_list() as $key => $item ) {
 			add_submenu_page( $item['parent_slug'], $item['title'], $item['title'], $item['capability'], $key, [ $this, 'load_main_template' ] );
@@ -43,14 +43,14 @@ class Menu {
 	}
 
 	public function load_main_template(): void {
-		echo '<div id="gemcloud-app" class="gemcloud-app">' . esc_html__( 'Loading…', 'gemcloud' ) . '</div>';
+		echo '<div id="gemoffload-app" class="gemoffload-app">' . esc_html__( 'Loading…', 'gemoffload' ) . '</div>';
 	}
 
 	/**
 	 * One shape with a single fill, so WordPress can repaint it for the admin colour scheme.
 	 */
 	private static function icon(): string {
-		$path = GEMCLOUD_ASSETS_DIR_PATH . 'images/menu-icon.svg';
+		$path = GEMOFFLOAD_ASSETS_DIR_PATH . 'images/menu-icon.svg';
 		if ( ! is_readable( $path ) ) {
 			return 'dashicons-cloud';
 		}

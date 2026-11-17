@@ -1,9 +1,9 @@
 <?php
-namespace GemCloud\Media;
+namespace GemOffload\Media;
 
-use GemCloud\Items\Item;
-use GemCloud\Items\ItemRepository;
-use GemCloud\Manager;
+use GemOffload\Items\Item;
+use GemOffload\Items\ItemRepository;
+use GemOffload\Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -148,7 +148,7 @@ final class UrlRewriter {
 
 	/**
 	 * The attachment a URL points at, whichever form it is in: the local
-	 * uploads URL, a public cloud URL, or a private /?gemcloud_file= link. Pages
+	 * uploads URL, a public cloud URL, or a private /?gemoffload_file= link. Pages
 	 * and the media modal hand out the cloud forms, so plugins that store a
 	 * picked file's URL may have saved one of them.
 	 */
@@ -200,7 +200,7 @@ final class UrlRewriter {
 		}
 
 		// A file a product keeps outside the media library, inside uploads.
-		$relative = \GemCloud\Keys::relative_to_uploads( $item->local_path );
+		$relative = \GemOffload\Keys::relative_to_uploads( $item->local_path );
 		if ( '' === $relative ) {
 			return $url;
 		}
@@ -208,7 +208,7 @@ final class UrlRewriter {
 	}
 
 	/**
-	 * The stored object a cloud URL (public address or /?gemcloud_file= link)
+	 * The stored object a cloud URL (public address or /?gemoffload_file= link)
 	 * points at, or null for any other URL.
 	 */
 	public static function item_for_url( string $url ): ?Item {
@@ -227,7 +227,7 @@ final class UrlRewriter {
 			return null;
 		}
 		$path = strtok( $url, '?' );
-		foreach ( array_unique( array_filter( [ \GemCloud\Settings::value( 'buckets.public.name', '' ), \GemCloud\Settings::value( 'buckets.private.name', '' ) ] ) ) as $bucket ) {
+		foreach ( array_unique( array_filter( [ \GemOffload\Settings::value( 'buckets.public.name', '' ), \GemOffload\Settings::value( 'buckets.private.name', '' ) ] ) ) as $bucket ) {
 			$base = Manager::public_base_url( $bucket );
 			if ( $base && 0 === strpos( $path, $base . '/' ) ) {
 				return ItemRepository::find_by_key( rawurldecode( substr( $path, strlen( $base ) + 1 ) ) );

@@ -1,25 +1,25 @@
 <?php
-namespace GemCloud\Media;
+namespace GemOffload\Media;
 
-use GemCloud\Integrations\Integrations;
-use GemCloud\Items\Item;
-use GemCloud\Items\ItemRepository;
-use GemCloud\Manager;
-use GemCloud\Settings;
+use GemOffload\Integrations\Integrations;
+use GemOffload\Items\Item;
+use GemOffload\Items\ItemRepository;
+use GemOffload\Manager;
+use GemOffload\Settings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * Private files are never linked directly. Pages show /?gemcloud_file=<id>; the
+ * Private files are never linked directly. Pages show /?gemoffload_file=<id>; the
  * click lands here, the access check runs, and only then is a short-lived
  * signed URL created and the browser redirected to it. A signed URL printed
  * into HTML would survive in caches, crawlers and screenshots.
  */
 final class PrivateDelivery {
 
-	const QUERY_VAR = 'gemcloud_file';
+	const QUERY_VAR = 'gemoffload_file';
 
 	/** Minimum signed-link lifetime for video and audio: 4 hours. */
 	const MEDIA_TTL = 4 * HOUR_IN_SECONDS;
@@ -92,7 +92,7 @@ final class PrivateDelivery {
 		 * @param bool $allowed
 		 * @param Item $item
 		 */
-		return (bool) apply_filters( 'gemcloud/can_access', $allowed, $item );
+		return (bool) apply_filters( 'gemoffload/can_access', $allowed, $item );
 	}
 
 	public static function serve( Item $item ): void {
@@ -119,7 +119,7 @@ final class PrivateDelivery {
 		 * @param string $mode
 		 * @param Item   $item
 		 */
-		$mode = apply_filters( 'gemcloud/private_delivery_mode', $mode, $item );
+		$mode = apply_filters( 'gemoffload/private_delivery_mode', $mode, $item );
 
 		if ( 'stream' !== $mode ) {
 			$url = Manager::signed_url_for( $item, $opts );
@@ -153,7 +153,7 @@ final class PrivateDelivery {
 			$headers['Range'] = $range;
 		}
 
-		$tmp      = wp_tempnam( 'gemcloud' );
+		$tmp      = wp_tempnam( 'gemoffload' );
 		$response = wp_remote_get( $url, [
 			'timeout'  => 600,
 			'stream'   => true,
@@ -213,7 +213,7 @@ final class PrivateDelivery {
 		nocache_headers();
 		status_header( $status );
 		wp_die(
-			esc_html( 404 === $status ? __( 'File not found.', 'gemcloud' ) : ( 403 === $status ? __( 'You do not have access to this file.', 'gemcloud' ) : __( 'The file could not be fetched from storage.', 'gemcloud' ) ) ),
+			esc_html( 404 === $status ? __( 'File not found.', 'gemoffload' ) : ( 403 === $status ? __( 'You do not have access to this file.', 'gemoffload' ) : __( 'The file could not be fetched from storage.', 'gemoffload' ) ) ),
 			'',
 			[ 'response' => (int) $status ]
 		);

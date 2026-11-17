@@ -1,8 +1,8 @@
 <?php
-namespace GemCloud\Signing;
+namespace GemOffload\Signing;
 
-use GemCloud\Providers\Endpoint;
-use GemCloud\Security\Credentials;
+use GemOffload\Providers\Endpoint;
+use GemOffload\Security\Credentials;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

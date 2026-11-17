@@ -1,7 +1,7 @@
 {
-  "slug": "gemcloud",
-  "textdomain": "gemcloud",
-  "mainFile": "gemcloud.php",
+  "slug": "gemoffload",
+  "textdomain": "gemoffload",
+  "mainFile": "gemoffload.php",
   "languages": "languages",
   "zipName": "{slug}.{version}.zip",
   "outputDir": "..",
@@ -13,7 +13,7 @@
   "js": { "install": "auto", "installCommand": "npm install --legacy-peer-deps", "buildScript": "build" },
 
   "pot": {
-    "exclude": ["node_modules", "vendor", "dev_gemcloud", "tests", "build-tools", ".build-cache", "dist", "languages"]
+    "exclude": ["node_modules", "vendor", "dev_gemoffload", "tests", "build-tools", ".build-cache", "dist", "languages"]
   },
 
   "autoDownloadTools": true,
